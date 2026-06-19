@@ -1,0 +1,22 @@
+{
+  "_source": "https://ru.ethnologistics.com/ru/tariffs (real, fetched 2026-06-16)",
+  "_note": "Цены только для личных вещей ПВЗ→ПВЗ. РФ→УЗ по СТАНДАРТ/АВТО-ЭКОНОМ нужен фото/скан паспорта получателя. Коммерческие и >250$ — расчёт с менеджером. Доплата за габариты при сумме сторон >100см.",
+  "services": {
+    "standard": { "label": "СТАНДАРТ", "eta": "4–7 рабочих дней" },
+    "express":  { "label": "ЭКСПРЕСС", "eta": "3–5 рабочих дней" },
+    "ultra":    { "label": "УЛЬТРА",   "eta": "36 часов" },
+    "auto":     { "label": "АВТО",     "eta": "от 10 рабочих дней" }
+  },
+  "routes": [
+    { "country": "Россия", "city": "Москва",   "rates": { "express": { "usdPerKg": 12, "minKg": 1 }, "ultra": { "usdPerKg": 30, "minKg": 1 }, "auto": { "usdPerKg": 5, "minKg": 10 } } },
+    { "country": "Казахстан", "city": "Алматы", "rates": { "express": { "usdPerKg": 8, "minKg": 1 }, "ultra": { "usdPerKg": 30, "minKg": 1 }, "auto": { "usdPerKg": 5, "minKg": 10 } } },
+    { "country": "Кыргызстан", "city": "Бишкек", "rates": { "express": { "usdPerKg": 8, "minKg": 1 }, "ultra": { "usdPerKg": 30, "minKg": 1 }, "auto": { "usdPerKg": 5, "minKg": 10 } } },
+    { "country": "Таджикистан", "city": "Душанбе", "rates": { "express": { "usdPerKg": 8, "minKg": 1 }, "ultra": { "usdPerKg": 30, "minKg": 1 }, "auto": { "usdPerKg": 5, "minKg": 10 } } },
+    { "country": "Турция", "city": "Стамбул", "rates": { "express": { "usdPerKg": 8, "minKg": 2 }, "ultra": { "usdPerKg": 30, "minKg": 0 }, "auto": { "usdPerKg": 5, "minKg": 10 } } },
+    { "country": "ОАЭ", "city": "Дубай", "rates": { "express": { "usdPerKg": 8, "minKg": 2 } } },
+    { "country": "Европа", "city": "", "rates": { "express": { "usdPerKg": 12, "minKg": 1 } } },
+    { "country": "Великобритания", "city": "Лондон", "rates": { "express": { "usdPerKg": 10, "minKg": 1 } } },
+    { "country": "США", "city": "", "rates": { "express": { "usdPerKg": 12, "minKg": 1 } } },
+    { "country": "Китай", "city": "Гуанчжоу", "rates": {}, "byManager": true }
+  ]
+}
