@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { CONTACT } from "../lib/data";
+import { useT } from "./T";
+import LangSwitch from "./LangSwitch";
 
 const LINKS = [
   { href: "/stores", label: "Магазины" },
@@ -20,6 +22,7 @@ const Soc = {
 };
 
 export default function Header() {
+  const t = useT();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [hasDark, setHasDark] = useState(false);
@@ -51,7 +54,7 @@ export default function Header() {
         </Link>
         <nav className="nav" aria-label="Основная навигация">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} data-active={!l.href.includes("#") && pathname === l.href ? "1" : "0"} aria-current={pathname === l.href ? "page" : undefined}>{l.label}</a>
+            <a key={l.href} href={l.href} data-active={!l.href.includes("#") && pathname === l.href ? "1" : "0"} aria-current={pathname === l.href ? "page" : undefined}>{t(l.label)}</a>
           ))}
         </nav>
         <div className="hdr__cta">
@@ -62,14 +65,16 @@ export default function Header() {
                 <a className="hdr__soc" href={CONTACT.instagram} aria-label="Instagram">{Soc.ig}</a>
                 <a className="hdr__soc" href={CONTACT.telegram} aria-label="YouTube">{Soc.yt}</a>
               </div>
-              <a className="hdr__login" href="https://ethnologistics.com" aria-label="Вход в личный кабинет">Вход</a>
-              <a className="btn hdr__tg" href={CONTACT.telegram}>Связаться в Telegram</a>
+              <a className="hdr__login" href="https://ethnologistics.com" aria-label="Вход в личный кабинет">{t("Вход")}</a>
+              <a className="btn hdr__tg" href={CONTACT.telegram}>{t("Связаться в Telegram")}</a>
+              <LangSwitch variant="ghost" />
             </>
           ) : (
             <>
               <a className="hdr__phone" href={CONTACT.phoneHref}>{CONTACT.phone}</a>
-              <a className="hdr__login" href="https://ethnologistics.com" aria-label="Вход в личный кабинет">Вход</a>
-              <a className="btn btn--primary" href="/#calc">Рассчитать</a>
+              <a className="hdr__login" href="https://ethnologistics.com" aria-label="Вход в личный кабинет">{t("Вход")}</a>
+              <a className="btn btn--primary" href="/#calc">{t("Рассчитать")}</a>
+              <LangSwitch variant="solid" />
             </>
           )}
           <button
@@ -86,9 +91,10 @@ export default function Header() {
       <div className="mobile-menu" data-open={open ? "1" : "0"}>
         <button className="mobile-menu__close" onClick={() => setOpen(false)} aria-label="Закрыть меню">✕</button>
         {LINKS.map((l) => (
-          <a key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</a>
+          <a key={l.href} href={l.href} onClick={() => setOpen(false)}>{t(l.label)}</a>
         ))}
         <a href={CONTACT.phoneHref} onClick={() => setOpen(false)}>{CONTACT.phone}</a>
+        <LangSwitch variant="mobile" />
       </div>
     </header>
   );

@@ -838,3 +838,30 @@ textarea.lead-field { resize: vertical; min-height: 92px; }
 .hdr--ghost .hdr__login { color: #fff; }
 .hdr--ghost .hdr__login:hover { color: #cfe0f0; }
 @media (max-width: 860px) { .hdr__login { display: none; } }
+
+/* ===== Language switcher ===== */
+.langsw{position:relative;display:inline-flex}
+.langsw__btn{display:inline-flex;align-items:center;gap:.34rem;background:transparent;border:1px solid currentColor;
+  color:inherit;border-radius:999px;padding:.34rem .6rem .34rem .55rem;font:inherit;font-size:.82rem;font-weight:600;
+  cursor:pointer;line-height:1;opacity:.92;transition:opacity .15s,background .15s}
+.langsw__btn:hover{opacity:1}
+.langsw__globe{width:16px;height:16px;flex:none}
+.langsw__chev{width:13px;height:13px;flex:none;transition:transform .2s}
+.langsw[data-open="1"] .langsw__chev{transform:rotate(180deg)}
+.langsw__cur{letter-spacing:.02em}
+.langsw__menu{position:absolute;top:calc(100% + .5rem);right:0;min-width:180px;background:#fff;color:#0f1b2d;
+  border:1px solid rgba(0,0,0,.08);border-radius:14px;box-shadow:0 18px 50px rgba(10,20,40,.18);
+  padding:.4rem;margin:0;list-style:none;opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .16s,transform .16s,visibility .16s;z-index:120}
+.langsw[data-open="1"] .langsw__menu{opacity:1;visibility:visible;transform:translateY(0)}
+.langsw__opt{display:flex;align-items:center;gap:.6rem;width:100%;background:transparent;border:0;cursor:pointer;
+  padding:.6rem .7rem;border-radius:10px;font:inherit;text-align:left;color:#0f1b2d;transition:background .12s}
+.langsw__opt:hover{background:rgba(10,20,40,.05)}
+.langsw__opt[data-active="1"]{background:var(--accent,#0060ae);color:#fff}
+.langsw__optlabel{font-weight:700;font-size:.78rem;min-width:1.6rem;opacity:.85}
+.langsw__opt[data-active="1"] .langsw__optlabel{opacity:1}
+.langsw__optname{font-size:.92rem;font-weight:500}
+/* mobile menu variant: full-width rows */
+.langsw--mobile{width:100%}
+.langsw--mobile .langsw__btn{width:100%;justify-content:space-between;border-color:rgba(255,255,255,.25);padding:.7rem 1rem}
+.langsw--mobile .langsw__menu{right:auto;left:0;width:100%}

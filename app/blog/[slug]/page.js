@@ -5,6 +5,7 @@ import Footer from "../../../components/Footer";
 import { getArticle, allSlugs } from "../../../lib/articles";
 import { CONTACT } from "../../../lib/data";
 import { IconArrow } from "../../../components/icons";
+import T from "../../../components/T";
 
 export function generateStaticParams() {
   return allSlugs().map((slug) => ({ slug }));
@@ -21,12 +22,12 @@ export function generateMetadata({ params }) {
 }
 
 function Block({ b }) {
-  if (b.t === "h2") return <h2>{b.v}</h2>;
-  if (b.t === "h3") return <h3>{b.v}</h3>;
-  if (b.t === "p") return <p>{b.v}</p>;
-  if (b.t === "ul") return <ul>{b.v.map((x, i) => <li key={i}>{x}</li>)}</ul>;
-  if (b.t === "ol") return <ol>{b.v.map((x, i) => <li key={i}>{x}</li>)}</ol>;
-  if (b.t === "callout") return <div className="callout callout--accent">{b.v}</div>;
+  if (b.t === "h2") return <h2><T s={b.v} /></h2>;
+  if (b.t === "h3") return <h3><T s={b.v} /></h3>;
+  if (b.t === "p") return <p><T s={b.v} /></p>;
+  if (b.t === "ul") return <ul>{b.v.map((x, i) => <li key={i}><T s={x} /></li>)}</ul>;
+  if (b.t === "ol") return <ol>{b.v.map((x, i) => <li key={i}><T s={x} /></li>)}</ol>;
+  if (b.t === "callout") return <div className="callout callout--accent"><T s={b.v} /></div>;
   return null;
 }
 
@@ -42,12 +43,12 @@ export default function Article({ params }) {
           <div className="wrap article">
             <div className="article__hero">
               <div className="article__meta">
-                <Link href="/blog" style={{ color: "var(--accent)", fontWeight: 600 }}>Блог</Link>
-                <span>·</span><span>{a.tag}</span>
-                <span>·</span><span>{a.read}</span>
+                <Link href="/blog" style={{ color: "var(--accent)", fontWeight: 600 }}>{<T s={"Блог"} />}</Link>
+                <span>·</span><span>{<T s={a.tag} />}</span>
+                <span>·</span><span>{<T s={a.read} />}</span>
               </div>
-              <h1>{a.title}</h1>
-              <p className="lead" style={{ marginTop: "1rem" }}>{a.lead}</p>
+              <h1>{<T s={a.title} />}</h1>
+              <p className="lead" style={{ marginTop: "1rem" }}>{<T s={a.lead} />}</p>
             </div>
           </div>
 
@@ -60,11 +61,11 @@ export default function Article({ params }) {
             </div>
 
             <div className="cta" style={{ marginTop: "3rem" }}>
-              <h2 style={{ fontSize: "var(--h3)" }}>Посчитать доставку под ваш заказ</h2>
-              <p className="lead">Менеджер подберёт способ и подтвердит цену за 15 минут.</p>
+              <h2 style={{ fontSize: "var(--h3)" }}>{<T s={"Посчитать доставку под ваш заказ"} />}</h2>
+              <p className="lead">{<T s={"Менеджер подберёт способ и подтвердит цену за 15 минут."} />}</p>
               <div className="hero__cta" style={{ justifyContent: "center" }}>
-                <a className="btn btn--dark" href="/#calc">Открыть калькулятор <IconArrow style={{ width: 18, height: 18 }} /></a>
-                <a className="btn btn--ghost" href={CONTACT.telegram}>Написать в Telegram</a>
+                <a className="btn btn--dark" href="/#calc">{<T s={"Открыть калькулятор"} />} <IconArrow style={{ width: 18, height: 18 }} /></a>
+                <a className="btn btn--ghost" href={CONTACT.telegram}>{<T s={"Написать в Telegram"} />}</a>
               </div>
             </div>
           </div>

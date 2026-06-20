@@ -5,6 +5,7 @@ import Reveal from "../../components/Reveal";
 import Calculator from "../../components/Calculator";
 import { WORKS_STEPS } from "../../lib/content";
 import { CONTACT } from "../../lib/data";
+import T from "../../components/T";
 
 export const metadata = {
   title: "Как это работает — доставка и выкуп под ключ",
@@ -33,8 +34,8 @@ export default function WorksPage() {
           title="Как это работает — от заказа до вашей двери"
           sub="8 простых шагов: зарегистрируйтесь, получите адрес склада за границей, купите товар — остальное берём на себя."
         >
-          <a className="btn btn--light btn--lg" href="#calc">Рассчитать доставку</a>
-          <a className="btn btn--ghost btn--lg" href={CONTACT.telegram} style={{ background: "transparent", color: "#fff", borderColor: "rgba(255,255,255,.4)" }}>Связаться</a>
+          <a className="btn btn--light btn--lg" href="#calc">{<T s={"Рассчитать доставку"} />}</a>
+          <a className="btn btn--ghost btn--lg" href={CONTACT.telegram} style={{ background: "transparent", color: "#fff", borderColor: "rgba(255,255,255,.4)" }}>{<T s={"Связаться"} />}</a>
         </PageHero>
 
         <section className="section">
@@ -44,7 +45,7 @@ export default function WorksPage() {
                 <Reveal key={s.t} className="workrow" delay={i * 60}>
                   <div className="workrow__n">{String(i + 1).padStart(2, "0")}</div>
                   <div className="workrow__ic">{ICONS[i % ICONS.length]}</div>
-                  <div><h3>{s.t}</h3><p>{s.d}</p></div>
+                  <div><h3>{<T s={s.t} />}</h3><p>{<T s={s.d} />}</p></div>
                 </Reveal>
               ))}
             </div>
@@ -53,7 +54,7 @@ export default function WorksPage() {
 
         <section className="section panel" id="calc">
           <div className="wrap">
-            <div className="shead"><span className="eyebrow">Калькулятор</span><h2>Рассчитайте стоимость доставки</h2></div>
+            <div className="shead"><span className="eyebrow">{<T s={"Калькулятор"} />}</span><h2>{<T s={"Рассчитайте стоимость доставки"} />}</h2></div>
             <Reveal><Calculator /></Reveal>
           </div>
         </section>

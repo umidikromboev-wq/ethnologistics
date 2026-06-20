@@ -49,11 +49,12 @@ export const metadata = {
 };
 
 import Effects from "../components/Effects";
+import { LangProvider } from "../components/LangProvider";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="ru" className={`${inter.variable} ${display.variable}`}>
-      <body>{children}<Effects /></body>
+      <body><LangProvider>{children}<Effects /></LangProvider></body>
     </html>
   );
 }

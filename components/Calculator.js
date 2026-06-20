@@ -1,4 +1,5 @@
 "use client";
+import T, { useT } from "./T";
 import { useMemo, useState } from "react";
 import { ROUTES, TIERS, CONTACT } from "../lib/data";
 import { IconClock, IconArrow } from "./icons";
@@ -10,6 +11,7 @@ const POINTS = [{ id: "uz", name: "Узбекистан (Ташкент)" }, ...
 const EXTRAS = ["Надёжная упаковка", "Доставка до двери", "Фотоотчёт", "Забор груза"];
 
 export default function Calculator() {
+  const t = useT();
   const [from, setFrom] = useState("ru");
   const [to, setTo] = useState("uz");
   const [weight, setWeight] = useState("3");
@@ -49,54 +51,54 @@ export default function Calculator() {
       <div className="calc__form">
         <div className="calc__route">
           <div className="field">
-            <label htmlFor="from">Откуда</label>
+            <label htmlFor="from">{<T s={"Откуда"} />}</label>
             <select id="from" value={from} onChange={(e) => setFrom(e.target.value)}>
-              {POINTS.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
+              {POINTS.map((p) => <option key={p.id} value={p.id}>{(FLAG[p.id] ? FLAG[p.id] + " " : "") + t(p.name)}</option>)}
             </select>
           </div>
-          <button type="button" className="calc__swap" onClick={swap} aria-label="Поменять местами" title="Поменять местами">
+          <button type="button" className="calc__swap" onClick={swap} aria-label={t("Поменять местами")} title={t("Поменять местами")}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 4v13M7 4L4 7M7 4l3 3M17 20V7M17 20l3-3M17 20l-3-3" /></svg>
           </button>
           <div className="field">
-            <label htmlFor="to">Куда</label>
+            <label htmlFor="to">{<T s={"Куда"} />}</label>
             <select id="to" value={to} onChange={(e) => setTo(e.target.value)}>
-              {POINTS.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
+              {POINTS.map((p) => <option key={p.id} value={p.id}>{(FLAG[p.id] ? FLAG[p.id] + " " : "") + t(p.name)}</option>)}
             </select>
           </div>
         </div>
 
         <div className="field">
-          <label>Тип груза</label>
+          <label>{<T s={"Тип груза"} />}</label>
           <div className="calc__seg">
-            <button type="button" className="tier" data-on={cargo === "parcel" ? "1" : "0"} onClick={() => setCargo("parcel")}><span className="tier__t">Посылка</span><span className="tier__d">товары, грузы</span></button>
-            <button type="button" className="tier" data-on={cargo === "docs" ? "1" : "0"} onClick={() => setCargo("docs")}><span className="tier__t">Документы</span><span className="tier__d">бумаги, конверт</span></button>
+            <button type="button" className="tier" data-on={cargo === "parcel" ? "1" : "0"} onClick={() => setCargo("parcel")}><span className="tier__t">{<T s={"Посылка"} />}</span><span className="tier__d">{<T s={"товары, грузы"} />}</span></button>
+            <button type="button" className="tier" data-on={cargo === "docs" ? "1" : "0"} onClick={() => setCargo("docs")}><span className="tier__t">{<T s={"Документы"} />}</span><span className="tier__d">{<T s={"бумаги, конверт"} />}</span></button>
           </div>
         </div>
 
         <div className="calc__half">
           <div className="field">
-            <label htmlFor="weight">Вес, кг</label>
+            <label htmlFor="weight">{<T s={"Вес, кг"} />}</label>
             <input id="weight" type="number" min="0.5" step="0.5" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="3" />
           </div>
           <div className="field">
-            <label>Габариты, см (Д×Ш×В)</label>
+            <label>{<T s={"Габариты, см (Д×Ш×В)"} />}</label>
             <div className="calc__dims">
-              <input type="number" min="0" value={dims.l} onChange={(e) => setDims((d) => ({ ...d, l: e.target.value }))} placeholder="Д" aria-label="Длина" />
+              <input type="number" min="0" value={dims.l} onChange={(e) => setDims((d) => ({ ...d, l: e.target.value }))} placeholder={t("Д")} aria-label={t("Длина")} />
               <span className="x">×</span>
-              <input type="number" min="0" value={dims.w} onChange={(e) => setDims((d) => ({ ...d, w: e.target.value }))} placeholder="Ш" aria-label="Ширина" />
+              <input type="number" min="0" value={dims.w} onChange={(e) => setDims((d) => ({ ...d, w: e.target.value }))} placeholder={t("Ш")} aria-label={t("Ширина")} />
               <span className="x">×</span>
-              <input type="number" min="0" value={dims.h} onChange={(e) => setDims((d) => ({ ...d, h: e.target.value }))} placeholder="В" aria-label="Высота" />
+              <input type="number" min="0" value={dims.h} onChange={(e) => setDims((d) => ({ ...d, h: e.target.value }))} placeholder={t("В")} aria-label={t("Высота")} />
             </div>
           </div>
         </div>
 
         {!byManager && (
           <div className="field">
-            <label>Скорость доставки</label>
+            <label>{<T s={"Скорость доставки"} />}</label>
             <div className="tiers">
               {services.map((s) => (
                 <button key={s} type="button" className="tier" data-on={activeService === s ? "1" : "0"} onClick={() => setService(s)} aria-pressed={activeService === s}>
-                  <span className="tier__t">{TIERS[s].t}</span><span className="tier__d">{TIERS[s].d}</span>
+                  <span className="tier__t">{<T s={TIERS[s].t} />}</span><span className="tier__d">{<T s={TIERS[s].d} />}</span>
                 </button>
               ))}
             </div>
@@ -104,11 +106,11 @@ export default function Calculator() {
         )}
 
         <div className="field" style={{ marginBottom: 0 }}>
-          <label>Дополнительные услуги</label>
+          <label>{<T s={"Дополнительные услуги"} />}</label>
           <div className="calc__chips">
             {EXTRAS.map((x) => (
               <label key={x} className="calc__chip" data-on={extras.includes(x) ? "1" : "0"}>
-                <input type="checkbox" checked={extras.includes(x)} onChange={() => toggleExtra(x)} />{x}
+                <input type="checkbox" checked={extras.includes(x)} onChange={() => toggleExtra(x)} />{<T s={x} />}
               </label>
             ))}
           </div>
@@ -119,9 +121,9 @@ export default function Calculator() {
         <div>
           {byManager ? (
             <>
-              <div className="calc__price" style={{ fontSize: "clamp(1.6rem,1.2rem+1.4vw,2.1rem)" }}>Расчёт с менеджером</div>
+              <div className="calc__price" style={{ fontSize: "clamp(1.6rem,1.2rem+1.4vw,2.1rem)" }}>{<T s={"Расчёт с менеджером"} />}</div>
               <div style={{ color: "rgba(255,255,255,.8)", marginTop: ".6rem", fontSize: ".95rem", maxWidth: "30rem" }}>
-                {from === to ? "Выберите разные точки отправления и назначения." : "По этому маршруту считаем индивидуально — оставьте заявку, посчитаем точно под ваш груз."}
+                {from === to ? t("Выберите разные точки отправления и назначения.") : t("По этому маршруту считаем индивидуально — оставьте заявку, посчитаем точно под ваш груз.")}
               </div>
             </>
           ) : (
@@ -129,15 +131,15 @@ export default function Calculator() {
               <span className="calc__eta"><IconClock style={{ width: 18, height: 18 }} /> {result.eta}</span>
               <div style={{ marginTop: ".6rem" }} className="calc__price">≈ ${result.price}</div>
               <div style={{ color: "rgba(255,255,255,.8)", marginTop: ".4rem", fontSize: ".95rem" }}>
-                {result.perKg}$/кг · расчёт от {result.billable} кг{result.vol > parseFloat(weight || 0) ? " (по объёмному весу)" : ""}
-                {extras.length ? ` · + услуги: ${extras.length}` : ""}
+                {result.perKg}{t("$/кг · расчёт от {x} кг").replace("{x}", result.billable)}{result.vol > parseFloat(weight || 0) ? t(" (по объёмному весу)") : ""}
+                {extras.length ? t(" · + услуги: {n}").replace("{n}", extras.length) : ""}
               </div>
             </>
           )}
         </div>
         <div style={{ display: "grid", gap: ".9rem" }}>
-          <a className="btn btn--primary" href={CONTACT.telegram} style={{ width: "100%" }}>Оформить заявку <IconArrow style={{ width: 18, height: 18 }} /></a>
-          <p className="calc__note">Цены для личных вещей ПВЗ→ПВЗ. Коммерческие и грузы дороже $250 менеджер рассчитает индивидуально. Звонок: <a href={CONTACT.phoneHref} style={{ color: "#fff", fontWeight: 600 }}>{CONTACT.phone}</a></p>
+          <a className="btn btn--primary" href={CONTACT.telegram} style={{ width: "100%" }}>{<T s={"Оформить заявку"} />} <IconArrow style={{ width: 18, height: 18 }} /></a>
+          <p className="calc__note">{<T s={"Цены для личных вещей ПВЗ→ПВЗ. Коммерческие и грузы дороже $250 менеджер рассчитает индивидуально. Звонок:"} />} <a href={CONTACT.phoneHref} style={{ color: "#fff", fontWeight: 600 }}>{CONTACT.phone}</a></p>
         </div>
       </div>
     </div>

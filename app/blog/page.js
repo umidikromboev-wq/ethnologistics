@@ -4,6 +4,7 @@ import Footer from "../../components/Footer";
 import PageHero from "../../components/PageHero";
 import Reveal from "../../components/Reveal";
 import { ARTICLES } from "../../lib/data";
+import T from "../../components/T";
 
 export const metadata = {
   title: "Блог и гайды по международной доставке",
@@ -28,10 +29,10 @@ export default function Blog() {
               {ARTICLES.map((a, i) => (
                 <Reveal key={a.slug} delay={i * 70}>
                   <Link href={`/blog/${a.slug}`} className="blogcard" style={{ height: "100%" }}>
-                    <span className="blogcard__tag">{a.tag}</span>
-                    <h3>{a.title}</h3>
-                    <p>{a.excerpt}</p>
-                    <span className="muted" style={{ fontSize: ".85rem", marginTop: "auto" }}>{a.read} · {a.date}</span>
+                    <span className="blogcard__tag">{<T s={a.tag} />}</span>
+                    <h3>{<T s={a.title} />}</h3>
+                    <p>{<T s={a.excerpt} />}</p>
+                    <span className="muted" style={{ fontSize: ".85rem", marginTop: "auto" }}><T s={a.read} /> · <T s={a.date} /></span>
                   </Link>
                 </Reveal>
               ))}
