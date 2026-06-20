@@ -3,6 +3,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 export const LANGS = [
   { code: "ru", label: "RU", name: "Русский" },
+  { code: "uz", label: "UZ", name: "Oʻzbekcha" },
+  { code: "en", label: "EN", name: "English" },
   { code: "kk", label: "KK", name: "Қазақша" },
   { code: "ky", label: "KY", name: "Кыргызча" },
   { code: "tg", label: "TG", name: "Тоҷикӣ" },
