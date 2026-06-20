@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Inter, Onest } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google"; // Google Analytics uchun
 
 // Body — clean, legible, Cyrillic.
 const inter = Inter({
@@ -46,6 +47,9 @@ export const metadata = {
     description:
       "Ультра-срочная доставка за 36 часов, выкуп товаров под ключ, сложные грузы. 8 стран, расчёт стоимости за минуту. С 2015 года.",
   },
+  verification: {
+    google: "1NaT936chCZ-Y6EjwjDP-ybhUYFWr6NELFzQJK_VlZ8",
+  },
 };
 
 import Effects from "../components/Effects";
@@ -54,7 +58,13 @@ import { LangProvider } from "../components/LangProvider";
 export default function RootLayout({ children }) {
   return (
     <html lang="ru" className={`${inter.variable} ${display.variable}`}>
-      <body><LangProvider>{children}<Effects /></LangProvider></body>
+      <body>
+        <LangProvider>
+          {children}
+          <Effects />
+        </LangProvider>
+        <GoogleAnalytics gaId="G-X4Y0M2K1GQ" />
+      </body>
     </html>
   );
 }
