@@ -2,7 +2,6 @@ import "./globals.css";
 import { Inter, Onest } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google"; // Google Analytics uchun
 
-// Body — clean, legible, Cyrillic.
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "600"],
