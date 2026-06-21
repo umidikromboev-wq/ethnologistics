@@ -10,7 +10,6 @@ const inter = Inter({
   display: "swap",
 });
 
-// Display — Onest: modern grotesk with character, native Cyrillic. Headlines & numbers.
 const display = Onest({
   subsets: ["latin", "cyrillic"],
   weight: ["500", "600", "700", "800"],
