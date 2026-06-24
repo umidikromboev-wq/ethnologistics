@@ -1,0 +1,31 @@
+name: Deploy to Vercel
+
+# Любой push в main автоматически деплоит сайт на Vercel.
+# Деплой запускается через Vercel Deploy Hook от имени владельца проекта,
+# поэтому права автора коммита в команде Vercel не требуются.
+on:
+  push:
+    branches: [main]
+
+# Параллельные пуши не накладываются друг на друга — деплоится последний.
+concurrency:
+  group: vercel-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel production deploy
+        run: |
+          if [ -z "${{ secrets.VERCEL_DEPLOY_HOOK }}" ]; then
+            echo "::error::Secret VERCEL_DEPLOY_HOOK is not set"
+            exit 1
+          fi
+          code=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}")
+          echo "Vercel deploy hook responded: HTTP $code"
+          if [ "$code" -lt 200 ] || [ "$code" -ge 300 ]; then
+            echo "::error::Deploy hook failed (HTTP $code)"
+            exit 1
+          fi
+          echo "Production deploy triggered. Follow build at https://vercel.com/umid-s-projects/ethno-site"
