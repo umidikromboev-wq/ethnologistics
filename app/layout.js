@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Inter, Onest } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google"; // Google Analytics uchun
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -54,14 +54,44 @@ import Effects from "../components/Effects";
 import { LangProvider } from "../components/LangProvider";
 
 export default function RootLayout({ children }) {
+  const GA_ID = "G-X4Y0M2K1GQ";
+
   return (
     <html lang="ru" className={`${inter.variable} ${display.variable}`}>
+      <head>
+        {/* Google Analytics asosiy skripti */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+
+        {/* Analytics sozlamalari va global telefon klikni kuzatuvchi kod */}
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+
+            // Global telefon bosilishini kuzatish (Siz aytgan kod)
+            document.addEventListener("click", function(e) {
+              const link = e.target.closest('a[href^="tel:"]');
+              if (link && typeof gtag === 'function') {
+                gtag('event', 'phone_click', {
+                  'event_category': 'Contact',
+                  'event_label': link.href,
+                  'transport_type': 'beacon'
+                });
+              }
+            });
+          `}
+        </Script>
+      </head>
       <body>
         <LangProvider>
           {children}
           <Effects />
         </LangProvider>
-        <GoogleAnalytics gaId="G-X4Y0M2K1GQ" />
       </body>
     </html>
   );
