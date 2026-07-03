@@ -237,7 +237,7 @@ export default function Home() {
               </p>
               <div className="checks">
                 {BUYER_STEPS.map((s) => (
-                  <div className="check" key={s.n}><IconCheck /><span><b>{s.t}.</b> {s.d}</span></div>
+                  <div className="check" key={s.n}><IconCheck /><span><b><T s={s.t} />.</b> <T s={s.d} /></span></div>
                 ))}
               </div>
               <a className="btn btn--primary" href={CONTACT.telegram}>{<T s={"Заказать выкуп"} />} <IconArrow style={{ width: 18, height: 18 }} /></a>
