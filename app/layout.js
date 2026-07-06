@@ -48,6 +48,15 @@ export const metadata = {
   verification: {
     google: "1NaT936chCZ-Y6EjwjDP-ybhUYFWr6NELFzQJK_VlZ8",
   },
+  // Google va zamonaviy brauzerlar uchun Favicon sozlamalari
+  icons: {
+    icon: [
+      { url: "/img/favicon.svg" },
+      { url: "/img/favicon.svg" },
+      { url: "/img/favicon.svg" },
+    ],
+    apple: [{ url: "/img/favicon.svg" }],
+  },
 };
 
 import Effects from "../components/Effects";
@@ -73,7 +82,7 @@ export default function RootLayout({ children }) {
             gtag('js', new Date());
             gtag('config', '${GA_ID}');
 
-            // Global telefon bosilishini kuzatish (Siz aytgan kod)
+            // Global telefon bosilishini kuzatish
             document.addEventListener("click", function(e) {
               const link = e.target.closest('a[href^="tel:"]');
               if (link && typeof gtag === 'function') {
