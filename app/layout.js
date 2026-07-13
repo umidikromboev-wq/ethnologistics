@@ -17,7 +17,7 @@ const display = Onest({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://ethnologistics.com"),
+  metadataBase: new URL("https://ethno-logistics.com/"),
   title: {
     default: "Ethno Logistics — международная доставка в Узбекистан",
     template: "%s · Ethno Logistics",
@@ -36,7 +36,7 @@ export const metadata = {
     "ETHNO Buyer",
     "международная логистика Ташкент",
   ],
-  alternates: { canonical: "https://ethnologistics.com" },
+  alternates: { canonical: "https://ethno-logistics.com/" },
   openGraph: {
     type: "website",
     locale: "ru_UZ",
@@ -51,11 +51,11 @@ export const metadata = {
   // Google va zamonaviy brauzerlar uchun Favicon sozlamalari
   icons: {
     icon: [
-      { url: "/img/favicon.svg" },
-      { url: "/img/favicon.svg" },
-      { url: "/img/favicon.svg" },
+      { url: "/img/favicon.png" },
+      { url: "/img/favicon.png" },
+      { url: "/img/favicon.png" },
     ],
-    apple: [{ url: "/img/favicon.svg" }],
+    apple: [{ url: "/img/favicon.png" }],
   },
 };
 
