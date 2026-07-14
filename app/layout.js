@@ -51,11 +51,11 @@ export const metadata = {
   // Google va zamonaviy brauzerlar uchun Favicon sozlamalari
   icons: {
     icon: [
-      { url: "/img/fim.png" },
-      { url: "/img/fim.png" },
-      { url: "/img/fim.png" },
+      { url: "/img/film.png" },
+      { url: "/img/film.png" },
+      { url: "/img/film.png" },
     ],
-    apple: [{ url: "/img/fim.png" }],
+    apple: [{ url: "/img/film.png" }],
   },
 };
 
