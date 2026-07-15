@@ -48,13 +48,8 @@ export const metadata = {
   verification: {
     google: "1NaT936chCZ-Y6EjwjDP-ybhUYFWr6NELFzQJK_VlZ8",
   },
-  // Google va zamonaviy brauzerlar uchun Favicon sozlamalari
   icons: {
-    icon: [
-      { url: "/img/film.png" },
-      { url: "/img/film.png" },
-      { url: "/img/film.png" },
-    ],
+    icon: [{ url: "/img/film.png" }],
     apple: [{ url: "/img/film.png" }],
   },
 };
@@ -67,26 +62,30 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="ru" className={`${inter.variable} ${display.variable}`}>
-      <head>
-        {/* Google Analytics asosiy skripti */}
+      <body>
+        <LangProvider>
+          {children}
+          <Effects />
+        </LangProvider>
+
+        {/* Google Analytics skriptlarini body oxiriga ko'chirdik */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
         />
 
-        {/* Analytics sozlamalari va global telefon klikni kuzatuvchi kod */}
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+            window.gtag = function(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${GA_ID}');
 
-            // Global telefon bosilishini kuzatish
+            // Global telefon bosilishini kuzatish (xavfsizroq tekshiruv bilan)
             document.addEventListener("click", function(e) {
               const link = e.target.closest('a[href^="tel:"]');
-              if (link && typeof gtag === 'function') {
-                gtag('event', 'phone_click', {
+              if (link && typeof window.gtag === 'function') {
+                window.gtag('event', 'phone_click', {
                   'event_category': 'Contact',
                   'event_label': link.href,
                   'transport_type': 'beacon'
@@ -95,12 +94,6 @@ export default function RootLayout({ children }) {
             });
           `}
         </Script>
-      </head>
-      <body>
-        <LangProvider>
-          {children}
-          <Effects />
-        </LangProvider>
       </body>
     </html>
   );
