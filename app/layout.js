@@ -63,7 +63,7 @@ import Effects from "../components/Effects";
 import { LangProvider } from "../components/LangProvider";
 
 export default function RootLayout({ children }) {
-  const GA_ID = "G-5ETRNT482E";
+  const GA_ID = "G-N6DTQPLZVJ";
 
   return (
     <html lang="ru" className={`${inter.variable} ${display.variable}`}>
