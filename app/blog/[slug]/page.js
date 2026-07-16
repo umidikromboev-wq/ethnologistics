@@ -110,6 +110,7 @@ export default function Article({ params }) {
               <img
                 src={a.image}
                 alt={a.title}
+                className="responsive-banner"
                 width="1300"
                 height="300"
                 loading="lazy"
