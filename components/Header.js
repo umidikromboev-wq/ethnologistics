@@ -1,4 +1,5 @@
 "use client";
+import LeadButton from "./LeadButton";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -66,7 +67,7 @@ export default function Header() {
                 <a className="hdr__soc" href={CONTACT.telegram} aria-label="YouTube">{Soc.yt}</a>
               </div>
               <a className="hdr__login" href="https://ethnologistics.com" aria-label="Вход в личный кабинет">{t("Вход")}</a>
-              <a className="btn hdr__tg" href={CONTACT.telegram}>{t("Связаться в Telegram")}</a>
+              <LeadButton className="btn hdr__tg" source="Шапка — связаться">{t("Связаться")}</LeadButton>
               <LangSwitch variant="ghost" />
             </>
           ) : (

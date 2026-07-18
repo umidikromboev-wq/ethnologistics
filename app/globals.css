@@ -3291,3 +3291,99 @@ textarea.lead-field {
     /* Agar aynan biror o'lcham (masalan 150px) bermoqchi bo'lsangiz: height: 150px; deb yozasiz */
   }
 }
+
+/* ---------- Lead modal (every CTA opens this instead of Telegram) ---------- */
+.lm {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(8, 19, 30, 0.62);
+  backdrop-filter: blur(6px);
+  animation: lmFade 0.22s ease both;
+  overflow-y: auto;
+}
+.lm__box {
+  position: relative;
+  width: min(30rem, 100%);
+  background: #fff;
+  color: var(--ink);
+  padding: clamp(1.5rem, 1rem + 1.6vw, 2.25rem);
+  box-shadow: 0 30px 80px rgba(8, 19, 30, 0.35);
+  animation: lmRise 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.lm__close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.lm__close:hover { color: var(--ink); }
+.lm__close svg { width: 1.1rem; height: 1.1rem; }
+.lm__title {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.lm__sub { color: var(--ink-2); margin: 0.6rem 0 0; font-size: 0.95rem; line-height: 1.5; }
+.lm__ctx {
+  margin-top: 0.9rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--accent-soft);
+  color: var(--accent-2);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+.lm__form { display: grid; gap: 0.7rem; margin-top: 1.25rem; }
+.lm__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.lm__field {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid #dbe3ea;
+  background: #f7f9fb;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+.lm__field:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: #fff;
+}
+textarea.lm__field { resize: vertical; min-height: 4.5rem; }
+.lm__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+  color: var(--ink-2);
+  line-height: 1.45;
+  cursor: pointer;
+}
+.lm__consent input { margin-top: 0.15rem; accent-color: var(--accent); }
+.lm__submit { width: 100%; justify-content: center; margin-top: 0.2rem; }
+.lm__submit:disabled { opacity: 0.65; cursor: default; }
+.lm__status { font-size: 0.9rem; line-height: 1.45; padding: 0.7rem 0.85rem; }
+.lm__status.is-ok { background: #e7f4ec; color: #1c6b3d; }
+.lm__status.is-err { background: #fdecec; color: #a32222; }
+
+@keyframes lmFade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes lmRise { from { opacity: 0; transform: translateY(14px) scale(0.985) } to { opacity: 1; transform: none } }
+
+@media (prefers-reduced-motion: reduce) {
+  .lm, .lm__box { animation: none; }
+}

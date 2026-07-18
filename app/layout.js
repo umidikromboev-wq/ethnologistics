@@ -55,6 +55,7 @@ export const metadata = {
 };
 
 import Effects from "../components/Effects";
+import LeadModal from "../components/LeadModal";
 import { LangProvider } from "../components/LangProvider";
 
 export default function RootLayout({ children }) {
@@ -66,6 +67,7 @@ export default function RootLayout({ children }) {
         <LangProvider>
           {children}
           <Effects />
+          <LeadModal />
         </LangProvider>
 
         {/* Google Analytics skriptlarini body oxiriga ko'chirdik */}

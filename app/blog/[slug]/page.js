@@ -1,3 +1,4 @@
+import LeadButton from "../../../components/LeadButton";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "../../../components/Header";
@@ -140,9 +141,9 @@ export default function Article({ params }) {
                   {<T s={"Открыть калькулятор"} />}{" "}
                   <IconArrow style={{ width: 18, height: 18 }} />
                 </a>
-                <a className="btn btn--ghost" href={CONTACT.telegram}>
-                  {<T s={"Написать в Telegram"} />}
-                </a>
+                <LeadButton className="btn btn--ghost" source="Блог — оставить заявку">
+                  {<T s={"Оставить заявку"} />}
+                </LeadButton>
               </div>
             </div>
           </div>
