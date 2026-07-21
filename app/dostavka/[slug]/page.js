@@ -1,3 +1,4 @@
+import LeadButton from "../../../components/LeadButton";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "../../../components/Header";
@@ -37,7 +38,7 @@ export default function DirectionPage({ params }) {
           sub={d.intro}
         >
           <a className="btn btn--light btn--lg" href="/#calc">{<T s={"Рассчитать доставку"} />}</a>
-          <a className="btn btn--ghost btn--lg" href={CONTACT.telegram} style={{ background: "transparent", color: "#fff", borderColor: "rgba(255,255,255,.4)" }}>{<T s={"Связаться"} />}</a>
+          <LeadButton className="btn btn--ghost btn--lg" source="Направление — связаться" style={{ background: "transparent", color: "#fff", borderColor: "rgba(255,255,255,.4)" }}>{<T s={"Связаться"} />}</LeadButton>
         </PageHero>
 
         <section className="section">

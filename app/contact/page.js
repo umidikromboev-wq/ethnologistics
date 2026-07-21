@@ -1,3 +1,4 @@
+import LeadButton from "../../components/LeadButton";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PageHero from "../../components/PageHero";
@@ -22,7 +23,7 @@ export default function ContactPage() {
           title="Контакты Ethno Logistics"
           sub="Филиалы в 8 странах. Новым клиентам отвечаем в течение 60 минут в рабочее время."
         >
-          <a className="btn btn--light btn--lg" href={CONTACT.telegram}>{<T s={"Написать в Telegram"} />}</a>
+          <LeadButton className="btn btn--light btn--lg" source="Контакты — оставить заявку">{<T s={"Оставить заявку"} />}</LeadButton>
           <a className="btn btn--ghost btn--lg" href={CONTACT.phoneHref} style={{ background: "transparent", color: "#fff", borderColor: "rgba(255,255,255,.4)" }}>{CONTACT.phone}</a>
         </PageHero>
 

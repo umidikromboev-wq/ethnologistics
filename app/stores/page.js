@@ -1,4 +1,5 @@
 "use client";
+import LeadButton from "../../components/LeadButton";
 import T, { useT } from "../../components/T";
 import { useState } from "react";
 import Header from "../../components/Header";
@@ -39,9 +40,9 @@ export default function StoresPage() {
                   </div>
                   <p>{<T s={s.desc} />}</p>
                   <div className="store-card__cc">{<T s={s.country} />}</div>
-                  <a className="btn btn--ghost" href={CONTACT.telegram} style={{ alignSelf: "flex-start", padding: ".55rem 1.1rem", fontSize: ".9rem" }}>
+                  <LeadButton className="btn btn--ghost" source={`Магазины — доставить из ${s.name}`} prefill={{ item: s.name }} style={{ alignSelf: "flex-start", padding: ".55rem 1.1rem", fontSize: ".9rem" }}>
                     {t("Доставить из")} {s.name}
-                  </a>
+                  </LeadButton>
                 </Reveal>
               ))}
             </div>
@@ -52,7 +53,7 @@ export default function StoresPage() {
           <div className="fullbleed__inner">
             <h2>{<T s={"Не нашли нужный магазин?"} />}</h2>
             <p className="lead">{<T s={"Мы выкупаем товар в любом зарубежном магазине — даже там, где нет доставки в Узбекистан."} />}</p>
-            <a className="btn btn--light btn--lg" href={CONTACT.telegram}>{<T s={"Заказать выкуп"} />}</a>
+            <LeadButton className="btn btn--light btn--lg" source="Магазины — заказать выкуп">{<T s={"Заказать выкуп"} />}</LeadButton>
           </div>
         </section>
       </main>

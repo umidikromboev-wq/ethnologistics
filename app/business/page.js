@@ -1,3 +1,4 @@
+import LeadButton from "../../components/LeadButton";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PageHero from "../../components/PageHero";
@@ -23,7 +24,7 @@ export default function BusinessPage() {
           title="Логистика для бизнеса любого масштаба"
           sub="Доставка, адаптированная под ваш бизнес: гибкие тарифы, удобные условия и сроки, интеграция и персональный менеджер."
         >
-          <a className="btn btn--light btn--lg" href={CONTACT.telegram}>{<T s={"Оставить заявку"} />}</a>
+          <LeadButton className="btn btn--light btn--lg" source="Бизнесу — оставить заявку">{<T s={"Оставить заявку"} />}</LeadButton>
         </PageHero>
 
         <section className="section">
@@ -35,7 +36,7 @@ export default function BusinessPage() {
                   <span className="biz-card__n">{String(i + 1).padStart(2, "0")}</span>
                   <h3>{<T s={s.t} />}</h3>
                   <p>{<T s={s.d} />}</p>
-                  <a className="link" href={CONTACT.telegram}>{<T s={"Узнать подробнее"} />} <IconArrow style={{ width: 16, height: 16 }} /></a>
+                  <LeadButton className="link" source="Бизнесу — узнать подробнее">{<T s={"Узнать подробнее"} />} <IconArrow style={{ width: 16, height: 16 }} /></LeadButton>
                 </Reveal>
               ))}
             </div>
@@ -47,7 +48,7 @@ export default function BusinessPage() {
           <div className="fullbleed__inner">
             <h2>{<T s={"Соберём доставку под ваш бизнес"} />}</h2>
             <p className="lead">{<T s={"Подключайте только нужные услуги. Не нашли подходящих опций — найдём индивидуальное решение."} />}</p>
-            <a className="btn btn--light btn--lg" href={CONTACT.telegram}>{<T s={"Обсудить поставки"} />}</a>
+            <LeadButton className="btn btn--light btn--lg" source="Бизнесу — обсудить поставки">{<T s={"Обсудить поставки"} />}</LeadButton>
           </div>
         </section>
       </main>

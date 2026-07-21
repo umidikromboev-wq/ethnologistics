@@ -1,3 +1,4 @@
+import LeadButton from "../../../components/LeadButton";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "../../../components/Header";

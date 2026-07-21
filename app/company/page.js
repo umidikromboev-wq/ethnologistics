@@ -1,3 +1,4 @@
+import LeadButton from "../../components/LeadButton";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PageHero from "../../components/PageHero";
@@ -23,7 +24,7 @@ export default function CompanyPage() {
           title={COMPANY.title}
           sub={COMPANY.text}
         >
-          <a className="btn btn--light btn--lg" href={CONTACT.telegram}>{<T s={"Связаться с нами"} />}</a>
+          <LeadButton className="btn btn--light btn--lg" source="О компании — связаться">{<T s={"Связаться с нами"} />}</LeadButton>
         </PageHero>
 
         <section className="section">

@@ -3,6 +3,7 @@ import T, { useT } from "./T";
 import { useMemo, useState } from "react";
 import { ROUTES, TIERS, CONTACT } from "../lib/data";
 import { IconClock, IconArrow } from "./icons";
+import { openLead } from "./LeadModal";
 
 const SERVICE_ORDER = ["ultra", "express", "standard", "auto"];
 const FLAG = { uz: "🇺🇿", ru: "🇷🇺", kz: "🇰🇿", kg: "🇰🇬", tj: "🇹🇯", tr: "🇹🇷", ae: "🇦🇪", eu: "🇪🇺", gb: "🇬🇧", us: "🇺🇸", cn: "🇨🇳" };
@@ -42,6 +43,20 @@ export default function Calculator() {
     const billable = Math.max(w, volumetric, r.min || 0, 0.5);
     return { price: Math.round(r.usd * billable), eta: TIERS[activeService].d, perKg: r.usd, billable: Math.round(billable * 10) / 10, vol: volumetric };
   }, [byManager, route, activeService, weight, volumetric]);
+
+  // What the visitor configured — travels with the lead so the manager sees the
+  // exact calculation instead of an empty "заявка с сайта".
+  const nameOf = (id) => (POINTS.find((p) => p.id === id) || {}).name || id;
+  const calcItem = `${nameOf(from)} → ${nameOf(to)}`;
+  const calcSummary = [
+    `Маршрут: ${calcItem}`,
+    `Груз: ${cargo === "docs" ? "документы" : "посылка"}`,
+    `Вес: ${weight || "—"} кг`,
+    volumetric > 0 ? `Габариты: ${dims.l}×${dims.w}×${dims.h} см (объёмный ${Math.round(volumetric * 10) / 10} кг)` : null,
+    activeService ? `Тариф: ${activeService}` : null,
+    result ? `Расчёт сайта: ≈ $${result.price} · ${result.eta}` : "Расчёт: с менеджером",
+    extras.length ? `Доп. услуги: ${extras.join(", ")}` : null,
+  ].filter(Boolean).join(" · ");
 
   const swap = () => { setFrom(to); setTo(from); };
   const toggleExtra = (x) => setExtras((p) => (p.includes(x) ? p.filter((e) => e !== x) : [...p, x]));
@@ -138,7 +153,14 @@ export default function Calculator() {
           )}
         </div>
         <div style={{ display: "grid", gap: ".9rem" }}>
-          <a className="btn btn--primary" href={CONTACT.telegram} style={{ width: "100%" }}>{<T s={"Оформить заявку"} />} <IconArrow style={{ width: 18, height: 18 }} /></a>
+          <button
+            type="button"
+            className="btn btn--primary"
+            style={{ width: "100%" }}
+            onClick={() => openLead({ source: "Калькулятор доставки", context: calcSummary, prefill: { item: calcItem } })}
+          >
+            {<T s={"Оформить заявку"} />} <IconArrow style={{ width: 18, height: 18 }} />
+          </button>
           <p className="calc__note">{<T s={"Цены для личных вещей ПВЗ→ПВЗ. Коммерческие и грузы дороже $250 менеджер рассчитает индивидуально. Звонок:"} />} <a href={CONTACT.phoneHref} style={{ color: "#fff", fontWeight: 600 }}>{CONTACT.phone}</a></p>
         </div>
       </div>

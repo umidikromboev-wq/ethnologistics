@@ -1,3 +1,4 @@
+import LeadButton from "../components/LeadButton";
 import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -77,7 +78,7 @@ export default function Home() {
             <div className="hero-v__spacer" />
             <div className="hero-v__foot">
               <div className="hero-v__btns">
-                <a className="btn btn--glass btn--lg" href={CONTACT.telegram}>{<T s={"Рассчитать стоимость в Telegram"} />}</a>
+                <LeadButton className="btn btn--glass btn--lg" source="Первый экран — расчёт стоимости">{<T s={"Рассчитать стоимость"} />}</LeadButton>
                 <a className="btn btn--glass btn--lg" href="#calc">{<T s={"Рассчитать стоимость на сайте"} />}</a>
               </div>
               <div className="ai-card">
@@ -240,7 +241,7 @@ export default function Home() {
                   <div className="check" key={s.n}><IconCheck /><span><b><T s={s.t} />.</b> <T s={s.d} /></span></div>
                 ))}
               </div>
-              <a className="btn btn--primary" href={CONTACT.telegram}>{<T s={"Заказать выкуп"} />} <IconArrow style={{ width: 18, height: 18 }} /></a>
+              <LeadButton className="btn btn--primary" source="ETHNO Buyer — заказать выкуп">{<T s={"Заказать выкуп"} />} <IconArrow style={{ width: 18, height: 18 }} /></LeadButton>
             </div>
             <Reveal className="route" style={{ boxShadow: "var(--shadow)" }}>
               <div className="route__media" style={{ aspectRatio: "4/5" }}>
@@ -276,7 +277,7 @@ export default function Home() {
                   <li><IconCheck /><span>{<T s={"Объединение нескольких посылок ради экономии"} />}</span></li>
                   <li><IconCheck /><span>{<T s={"Отслеживание в приложении, боте и на сайте"} />}</span></li>
                 </ul>
-                <a className="btn btn--ghost" href={CONTACT.telegram}>{<T s={"Оформить посылку"} />}</a>
+                <LeadButton className="btn btn--ghost" source="Частным клиентам — оформить посылку">{<T s={"Оформить посылку"} />}</LeadButton>
               </Reveal>
               <Reveal className="aud aud--dark" delay={90}>
                 <span className="aud__tag">{<T s={"Бизнесу"} />}</span>
@@ -287,7 +288,7 @@ export default function Home() {
                   <li><IconCheck /><span>{<T s={"Консолидация партий и оптимизация стоимости килограмма"} />}</span></li>
                   <li><IconCheck /><span>{<T s={"Персональный менеджер и приоритетные сроки"} />}</span></li>
                 </ul>
-                <a className="btn btn--primary" href={CONTACT.telegram}>{<T s={"Обсудить поставки"} />}</a>
+                <LeadButton className="btn btn--primary" source="Бизнесу — обсудить поставки">{<T s={"Обсудить поставки"} />}</LeadButton>
               </Reveal>
             </div>
           </div>
