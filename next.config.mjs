@@ -43,7 +43,7 @@ const nextConfig = {
     return [
       {
         source: "/uz/contact",
-        destination: "/uz",
+        destination: "/",
         permanent: true, // 301 Status Code (SEO uchun mos)
       },
       // Agar boshqa tillardagi contact sahifalarini ham yo'naltirmoqchi bo'lsangiz (masalan, /ru/contact -> /ru):
