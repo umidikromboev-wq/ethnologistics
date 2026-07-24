@@ -37,6 +37,25 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+
+  // 1. Redirectlar ro'yxati
+  async redirects() {
+    return [
+      {
+        source: "/uz/contact",
+        destination: "/uz",
+        permanent: true, // 301 Status Code (SEO uchun mos)
+      },
+      // Agar boshqa tillardagi contact sahifalarini ham yo'naltirmoqchi bo'lsangiz (masalan, /ru/contact -> /ru):
+      // {
+      //   source: "/:lang(uz|ru|en)/contact",
+      //   destination: "/:lang",
+      //   permanent: true,
+      // }
+    ];
+  },
+
+  // 2. Security Headerlar
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
