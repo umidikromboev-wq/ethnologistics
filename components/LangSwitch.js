@@ -1,9 +1,13 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { LANGS, useLang } from "./LangProvider";
+import { switchLangPath } from "../lib/locales";
 
 export default function LangSwitch({ variant = "solid" }) {
-  const { lang, setLang } = useLang();
+  const { lang } = useLang();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -34,15 +38,16 @@ export default function LangSwitch({ variant = "solid" }) {
       <ul className="langsw__menu" role="listbox" aria-label="Языки">
         {LANGS.map((l) => (
           <li key={l.code} role="option" aria-selected={l.code === lang}>
-            <button
-              type="button"
+            <Link
+              href={switchLangPath(pathname, l.code)}
+              hrefLang={l.code}
               className="langsw__opt"
               data-active={l.code === lang ? "1" : "0"}
-              onClick={() => { setLang(l.code); setOpen(false); }}
+              onClick={() => setOpen(false)}
             >
               <span className="langsw__optlabel">{l.label}</span>
               <span className="langsw__optname">{l.name}</span>
-            </button>
+            </Link>
           </li>
         ))}
       </ul>

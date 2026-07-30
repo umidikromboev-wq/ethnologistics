@@ -1,23 +1,34 @@
-import LeadButton from "../../components/LeadButton";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import PageHero from "../../components/PageHero";
-import Tracking from "../../components/Tracking";
-import { CONTACT } from "../../lib/data";
-import { COMPANY } from "../../lib/content";
-import T from "../../components/T";
+import LeadButton from "../../../components/LeadButton";
+import { LOCALES, normalizeLang, href, absHref, alternatesFor, tr } from "../../../lib/locales";
+import Header from "../../../components/Header";
+import Footer from "../../../components/Footer";
+import PageHero from "../../../components/PageHero";
+import Tracking from "../../../components/Tracking";
+import { CONTACT } from "../../../lib/data";
+import { COMPANY } from "../../../lib/content";
+import T from "../../../components/T";
 
-export const metadata = {
+const META = {
   title: "Контакты Ethno Logistics",
   description: "Свяжитесь с Ethno Logistics: телефон, Telegram, Instagram. Филиалы в 8 странах. Ответ на заявку в течение 60 минут.",
 };
 
-export default function ContactPage() {
+export async function generateMetadata({ params }) {
+  const lang = normalizeLang((await params).lang);
+  return {
+    title: tr(META.title, lang),
+    description: tr(META.description, lang),
+    alternates: alternatesFor("/contact", lang),
+  };
+}
+
+export default async function ContactPage({ params }) {
+  const lang = normalizeLang((await params).lang);
   return (
     <>
       <Header />
       <main>
-        <PageHero
+        <PageHero lang={lang}
           crumb="Контакты"
           img="/img/courier.jpg"
           title="Контакты Ethno Logistics"
@@ -57,7 +68,7 @@ export default function ContactPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </>
   );
 }

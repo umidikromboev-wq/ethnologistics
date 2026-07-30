@@ -1,24 +1,35 @@
-import LeadButton from "../../components/LeadButton";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import PageHero from "../../components/PageHero";
-import Reveal from "../../components/Reveal";
-import { BUSINESS_SEGMENTS } from "../../lib/content";
-import { CONTACT } from "../../lib/data";
-import { IconArrow } from "../../components/icons";
-import T from "../../components/T";
+import LeadButton from "../../../components/LeadButton";
+import { LOCALES, normalizeLang, href, absHref, alternatesFor, tr } from "../../../lib/locales";
+import Header from "../../../components/Header";
+import Footer from "../../../components/Footer";
+import PageHero from "../../../components/PageHero";
+import Reveal from "../../../components/Reveal";
+import { BUSINESS_SEGMENTS } from "../../../lib/content";
+import { CONTACT } from "../../../lib/data";
+import { IconArrow } from "../../../components/icons";
+import T from "../../../components/T";
 
-export const metadata = {
+const META = {
   title: "Логистика для бизнеса — корпоративная доставка",
   description: "Доставка под потребности вашего бизнеса: маркетплейсы, интернет-магазины, соцсети, мультиселлеры. Гибкие тарифы, API-интеграция, персональный менеджер.",
 };
 
-export default function BusinessPage() {
+export async function generateMetadata({ params }) {
+  const lang = normalizeLang((await params).lang);
+  return {
+    title: tr(META.title, lang),
+    description: tr(META.description, lang),
+    alternates: alternatesFor("/business", lang),
+  };
+}
+
+export default async function BusinessPage({ params }) {
+  const lang = normalizeLang((await params).lang);
   return (
     <>
       <Header />
       <main>
-        <PageHero
+        <PageHero lang={lang}
           crumb="Для бизнеса"
           img="/img/warehouse.jpg"
           title="Логистика для бизнеса любого масштаба"
@@ -52,7 +63,7 @@ export default function BusinessPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </>
   );
 }

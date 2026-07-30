@@ -1,16 +1,18 @@
 "use client";
-import LeadButton from "../../components/LeadButton";
-import T, { useT } from "../../components/T";
+import LeadButton from "../../../components/LeadButton";
+import T, { useT } from "../../../components/T";
 import { useState } from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import PageHero from "../../components/PageHero";
-import Reveal from "../../components/Reveal";
-import { BEST_STORES, STORE_COUNTRIES } from "../../lib/content";
-import { CONTACT } from "../../lib/data";
+import Header from "../../../components/Header";
+import Footer from "../../../components/Footer";
+import PageHero from "../../../components/PageHero";
+import Reveal from "../../../components/Reveal";
+import { BEST_STORES, STORE_COUNTRIES } from "../../../lib/content";
+import { CONTACT } from "../../../lib/data";
+import { useLang } from "../../../components/LangProvider";
 
 export default function StoresPage() {
   const t = useT();
+  const { lang } = useLang();
   const [country, setCountry] = useState("Все");
   const stores = country === "Все" ? BEST_STORES : BEST_STORES.filter((s) => s.country === country);
 
@@ -18,7 +20,7 @@ export default function StoresPage() {
     <>
       <Header />
       <main>
-        <PageHero
+        <PageHero lang={lang}
           crumb="Магазины"
           img="/img/parcels.jpg"
           title="Лучшие магазины для покупок с доставкой в Узбекистан"
@@ -57,7 +59,7 @@ export default function StoresPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </>
   );
 }

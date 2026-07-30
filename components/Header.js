@@ -6,6 +6,8 @@ import Link from "next/link";
 import { CONTACT } from "../lib/data";
 import { useT } from "./T";
 import LangSwitch from "./LangSwitch";
+import { useLang } from "./LangProvider";
+import { href } from "../lib/locales";
 
 const LINKS = [
   { href: "/stores", label: "Магазины" },
@@ -24,6 +26,8 @@ const Soc = {
 
 export default function Header() {
   const t = useT();
+  const { lang } = useLang();
+  const link = (p) => href(lang, p);
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [hasDark, setHasDark] = useState(false);
@@ -44,7 +48,7 @@ export default function Header() {
   return (
     <header className={`hdr ${hasDark ? "hdr--over" : ""} ${ghost ? "hdr--ghost" : "hdr--solid"}`}>
       <div className="wrap hdr__row">
-        <Link href="/" className="logo" aria-label="Ethno Logistics — на главную" onClick={() => setOpen(false)}>
+        <Link href={link("/")} className="logo" aria-label="Ethno Logistics — на главную" onClick={() => setOpen(false)}>
           <img
             src={ghost ? "/img/logo-white.png" : "/img/logo-navy.png"}
             alt="Ethno Logistics"
@@ -55,7 +59,7 @@ export default function Header() {
         </Link>
         <nav className="nav" aria-label="Основная навигация">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} data-active={!l.href.includes("#") && pathname === l.href ? "1" : "0"} aria-current={pathname === l.href ? "page" : undefined}>{t(l.label)}</a>
+            <a key={l.href} href={link(l.href)} data-active={!l.href.includes("#") && pathname === l.href ? "1" : "0"} aria-current={pathname === l.href ? "page" : undefined}>{t(l.label)}</a>
           ))}
         </nav>
         <div className="hdr__cta">
@@ -92,7 +96,7 @@ export default function Header() {
       <div className="mobile-menu" data-open={open ? "1" : "0"}>
         <button className="mobile-menu__close" onClick={() => setOpen(false)} aria-label="Закрыть меню">✕</button>
         {LINKS.map((l) => (
-          <a key={l.href} href={l.href} onClick={() => setOpen(false)}>{t(l.label)}</a>
+          <a key={l.href} href={link(l.href)} onClick={() => setOpen(false)}>{t(l.label)}</a>
         ))}
         <a href={CONTACT.phoneHref} onClick={() => setOpen(false)}>{CONTACT.phone}</a>
         <LangSwitch variant="mobile" />

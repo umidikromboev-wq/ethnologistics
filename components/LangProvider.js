@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext } from "react";
 
 export const LANGS = [
   { code: "ru", label: "RU", name: "Русский" },
@@ -10,32 +10,13 @@ export const LANGS = [
   { code: "tg", label: "TG", name: "Тоҷикӣ" },
 ];
 
-const STORAGE_KEY = "ethno_lang";
-const LangContext = createContext({ lang: "ru", setLang: () => {} });
+const LangContext = createContext({ lang: "ru" });
 
-export function LangProvider({ children }) {
-  const [lang, setLangState] = useState("ru");
-
-  // Hydrate from storage on the client (server renders RU for SSR/SEO).
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved && LANGS.some((l) => l.code === saved)) setLangState(saved);
-    } catch {}
-  }, []);
-
-  // Keep <html lang> in sync for a11y / SEO.
-  useEffect(() => {
-    if (typeof document !== "undefined") document.documentElement.lang = lang;
-  }, [lang]);
-
-  const setLang = (code) => {
-    if (!LANGS.some((l) => l.code === code)) return;
-    setLangState(code);
-    try { localStorage.setItem(STORAGE_KEY, code); } catch {}
-  };
-
-  return <LangContext.Provider value={{ lang, setLang }}>{children}</LangContext.Provider>;
+// Язык приходит из адреса страницы (сегмент /ru, /uz, …), а не из localStorage.
+// Благодаря этому переведённый текст попадает уже в серверную разметку — его
+// видит поисковик, и на любую языковую версию можно дать прямую ссылку.
+export function LangProvider({ lang = "ru", children }) {
+  return <LangContext.Provider value={{ lang }}>{children}</LangContext.Provider>;
 }
 
 export function useLang() {

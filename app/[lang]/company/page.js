@@ -1,24 +1,35 @@
-import LeadButton from "../../components/LeadButton";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import PageHero from "../../components/PageHero";
-import Reveal from "../../components/Reveal";
-import { COMPANY } from "../../lib/content";
-import { CONTACT } from "../../lib/data";
-import { IconCheck } from "../../components/icons";
-import T from "../../components/T";
+import LeadButton from "../../../components/LeadButton";
+import { LOCALES, normalizeLang, href, absHref, alternatesFor, tr } from "../../../lib/locales";
+import Header from "../../../components/Header";
+import Footer from "../../../components/Footer";
+import PageHero from "../../../components/PageHero";
+import Reveal from "../../../components/Reveal";
+import { COMPANY } from "../../../lib/content";
+import { CONTACT } from "../../../lib/data";
+import { IconCheck } from "../../../components/icons";
+import T from "../../../components/T";
 
-export const metadata = {
+const META = {
   title: "О компании Ethno Logistics",
   description: "Ethno Logistics — международная транспортно-логистическая компания с 2015 года. Доставка авиа и авто, выкуп, 8 стран в сети.",
 };
 
-export default function CompanyPage() {
+export async function generateMetadata({ params }) {
+  const lang = normalizeLang((await params).lang);
+  return {
+    title: tr(META.title, lang),
+    description: tr(META.description, lang),
+    alternates: alternatesFor("/company", lang),
+  };
+}
+
+export default async function CompanyPage({ params }) {
+  const lang = normalizeLang((await params).lang);
   return (
     <>
       <Header />
       <main>
-        <PageHero
+        <PageHero lang={lang}
           crumb="О компании"
           img="/img/warehouse.jpg"
           title={COMPANY.title}
@@ -54,7 +65,7 @@ export default function CompanyPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </>
   );
 }

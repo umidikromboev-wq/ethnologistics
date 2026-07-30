@@ -1,24 +1,30 @@
-import LeadButton from "../../../components/LeadButton";
+import LeadButton from "../../../../components/LeadButton";
+import { LOCALES, normalizeLang, href, absHref, alternatesFor, tr } from "../../../../lib/locales";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Header from "../../../components/Header";
-import Footer from "../../../components/Footer";
-import { getArticle, allSlugs } from "../../../lib/articles";
-import { CONTACT } from "../../../lib/data";
-import { IconArrow } from "../../../components/icons";
-import T from "../../../components/T";
+import Header from "../../../../components/Header";
+import Footer from "../../../../components/Footer";
+import { getArticle, allSlugs } from "../../../../lib/articles";
+import { CONTACT } from "../../../../lib/data";
+import { IconArrow } from "../../../../components/icons";
+import T from "../../../../components/T";
 
 export function generateStaticParams() {
-  return allSlugs().map((slug) => ({ slug }));
+  return LOCALES.flatMap((lang) => allSlugs().map((slug) => ({ lang, slug })));
 }
 
-export function generateMetadata({ params }) {
-  const a = getArticle(params.slug);
+export async function generateMetadata({ params }) {
+  const { slug, lang: raw } = await params;
+  const lang = normalizeLang(raw);
+  const a = getArticle(slug);
   if (!a) return {};
+  const title = tr(a.title, lang);
+  const description = tr(a.excerpt, lang);
   return {
-    title: a.title,
-    description: a.excerpt,
-    openGraph: { title: a.title, description: a.excerpt, type: "article" },
+    title,
+    description,
+    alternates: alternatesFor(`/blog/${slug}`, lang),
+    openGraph: { title, description, type: "article" },
   };
 }
 
@@ -142,8 +148,11 @@ function Block({ b }) {
   return null;
 }
 
-export default function Article({ params }) {
-  const a = getArticle(params.slug);
+export default async function Article({ params }) {
+  const { slug, lang: rawLang } = await params;
+  const lang = normalizeLang(rawLang);
+  const link = (p) => href(lang, p);
+  const a = getArticle(slug);
   if (!a) notFound();
 
   return (
@@ -174,7 +183,7 @@ export default function Article({ params }) {
                 }}
               >
                 <Link
-                  href="/blog"
+                  href={link("/blog")}
                   style={{
                     color: "var(--accent, #2563eb)",
                     fontWeight: 600,
@@ -357,7 +366,7 @@ export default function Article({ params }) {
           </div>
         </article>
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </>
   );
 }

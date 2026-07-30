@@ -1,18 +1,19 @@
-import LeadButton from "../components/LeadButton";
+import LeadButton from "../../components/LeadButton";
+import { LOCALES, normalizeLang, href, absHref, alternatesFor, tr } from "../../lib/locales";
 import Link from "next/link";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Reveal from "../components/Reveal";
-import Calculator from "../components/Calculator";
-import Tracking from "../components/Tracking";
-import Globe from "../components/Globe";
-import LeadForm from "../components/LeadForm";
-import { STATS, STORES, ARTICLES, CONTACT, USP, FAQ, RATINGS, BUYER_STEPS } from "../lib/data";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import Reveal from "../../components/Reveal";
+import Calculator from "../../components/Calculator";
+import Tracking from "../../components/Tracking";
+import Globe from "../../components/Globe";
+import LeadForm from "../../components/LeadForm";
+import { STATS, STORES, ARTICLES, CONTACT, USP, FAQ, RATINGS, BUYER_STEPS } from "../../lib/data";
 import {
   IconPlane, IconTruck, IconCart, IconBuilding, IconGlobe, IconShield,
   IconBolt, IconCheck, IconArrow, IconHeadset, IconCalc, IconPin,
-} from "../components/icons";
-import T from "../components/T";
+} from "../../components/icons";
+import T from "../../components/T";
 
 // Structured data — helps Google AND AI assistants understand the business.
 const JSONLD = {
@@ -59,7 +60,9 @@ const SERVICES = [
   { t: "Трансграничные перевозки", img: "/img/hero.jpg", d: "Международная логистика между 8 странами с 2015 года. 8 собственных складов, ответственность за груз 100% — при утрате возмещаем полную стоимость." },
 ];
 
-export default function Home() {
+export default async function Home({ params }) {
+  const lang = normalizeLang((await params).lang);
+  const link = (p) => href(lang, p);
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD) }} />
@@ -155,7 +158,7 @@ export default function Home() {
             </div>
             <div className="dir-list">
               {DIRECTIONS.map((d, i) => (
-                <Reveal as={Link} key={d.slug} href={`/dostavka/${d.slug}`} className="dir-row" delay={i * 50}>
+                <Reveal as={Link} key={d.slug} href={link(`/dostavka/${d.slug}`)} className="dir-row" delay={i * 50}>
                   <span className="dir-row__no">{String(i + 1).padStart(2, "0")}</span>
                   <span>
                     <span className="dir-row__name">{<T s={d.name} />}</span>
@@ -354,7 +357,7 @@ export default function Home() {
               <p className="muted" style={{ marginBottom: "1rem" }}>{<T s={"Везём из тысяч магазинов — вот популярные:"} />}</p>
               <div className="stores">{STORES.map((s) => <span key={s} className="store">{s}</span>)}</div>
               <div style={{ marginTop: "1.6rem" }}>
-                <Link className="btn btn--ghost" href="/stores">{<T s={"Все магазины и категории"} />}</Link>
+                <Link className="btn btn--ghost" href={link("/stores")}>{<T s={"Все магазины и категории"} />}</Link>
               </div>
             </div>
           </div>
@@ -368,10 +371,10 @@ export default function Home() {
                 <span className="sidx">{<T s={"06 — Гайды"} />}</span>
                 <h2>{<T s={"Как заказывать выгодно и без ошибок"} />}</h2>
               </div>
-              <Link className="btn btn--ghost" href="/blog">{<T s={"Все статьи"} />}</Link>
+              <Link className="btn btn--ghost" href={link("/blog")}>{<T s={"Все статьи"} />}</Link>
             </div>
             <div className="blog-feat">
-              <Reveal as={Link} href={`/blog/${ARTICLES[0].slug}`} className="blog-main">
+              <Reveal as={Link} href={link(`/blog/${ARTICLES[0].slug}`)} className="blog-main">
                 <img className="blog-main__bg" src="/img/parcels.jpg" alt="" width="800" height="500" loading="lazy" />
                 <span className="blogcard__tag">{<T s={ARTICLES[0].tag} />}</span>
                 <h3>{<T s={ARTICLES[0].title} />}</h3>
@@ -380,7 +383,7 @@ export default function Home() {
               </Reveal>
               <div className="blog-side">
                 {ARTICLES.slice(1).map((a, i) => (
-                  <Reveal as={Link} key={a.slug} href={`/blog/${a.slug}`} className="blog-mini" delay={i * 80}>
+                  <Reveal as={Link} key={a.slug} href={link(`/blog/${a.slug}`)} className="blog-mini" delay={i * 80}>
                     <span className="blogcard__tag">{<T s={a.tag} />}</span>
                     <h3>{<T s={a.title} />}</h3>
                     <p>{<T s={a.excerpt} />}</p>
@@ -413,7 +416,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </>
   );
 }

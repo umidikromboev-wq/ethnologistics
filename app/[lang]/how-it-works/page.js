@@ -1,17 +1,27 @@
-import LeadButton from "../../components/LeadButton";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import PageHero from "../../components/PageHero";
-import Reveal from "../../components/Reveal";
-import Calculator from "../../components/Calculator";
-import { WORKS_STEPS } from "../../lib/content";
-import { CONTACT } from "../../lib/data";
-import T from "../../components/T";
+import LeadButton from "../../../components/LeadButton";
+import { LOCALES, normalizeLang, href, absHref, alternatesFor, tr } from "../../../lib/locales";
+import Header from "../../../components/Header";
+import Footer from "../../../components/Footer";
+import PageHero from "../../../components/PageHero";
+import Reveal from "../../../components/Reveal";
+import Calculator from "../../../components/Calculator";
+import { WORKS_STEPS } from "../../../lib/content";
+import { CONTACT } from "../../../lib/data";
+import T from "../../../components/T";
 
-export const metadata = {
+const META = {
   title: "Как это работает — доставка и выкуп под ключ",
   description: "Пошаговая инструкция Ethno Logistics: регистрация, адрес склада, покупка в магазине, оплата и получение посылки в Узбекистане.",
 };
+
+export async function generateMetadata({ params }) {
+  const lang = normalizeLang((await params).lang);
+  return {
+    title: tr(META.title, lang),
+    description: tr(META.description, lang),
+    alternates: alternatesFor("/how-it-works", lang),
+  };
+}
 
 const ICONS = [
   <svg key="0" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M5 21c0-4 3-6 7-6 1.3 0 2.5.2 3.5.7" /><path d="M19 16v6M16 19h6" /></svg>, // register
@@ -24,12 +34,13 @@ const ICONS = [
   <svg key="7" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7M6 10v9h12v-9" /><path d="M9.5 15l1.8 1.8L15 13" /></svg>, // receive home+check
 ];
 
-export default function WorksPage() {
+export default async function WorksPage({ params }) {
+  const lang = normalizeLang((await params).lang);
   return (
     <>
       <Header />
       <main>
-        <PageHero
+        <PageHero lang={lang}
           crumb="Как это работает"
           img="/img/courier.jpg"
           title="Как это работает — от заказа до вашей двери"
@@ -60,7 +71,7 @@ export default function WorksPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </>
   );
 }

@@ -38,20 +38,24 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
-  // 1. Redirectlar ro'yxati
+  // Язык переехал в путь: /ru, /uz, /en, /kk, /ky, /tg. Старые адреса без
+  // префикса отдают 308 на русскую версию — вес и внешние ссылки переходят
+  // вместе с редиректом. Прежнее правило «/uz/contact → /» удалено: теперь
+  // это настоящая страница узбекской версии, а не остаток старой схемы.
   async redirects() {
+    const paths = [
+      "/blog",
+      "/stores",
+      "/business",
+      "/company",
+      "/contact",
+      "/how-it-works",
+    ];
     return [
-      {
-        source: "/uz/contact",
-        destination: "/",
-        permanent: true, // 301 Status Code (SEO uchun mos)
-      },
-      // Agar boshqa tillardagi contact sahifalarini ham yo'naltirmoqchi bo'lsangiz (masalan, /ru/contact -> /ru):
-      // {
-      //   source: "/:lang(uz|ru|en)/contact",
-      //   destination: "/:lang",
-      //   permanent: true,
-      // }
+      { source: "/", destination: "/ru", permanent: true },
+      ...paths.map((p) => ({ source: p, destination: `/ru${p}`, permanent: true })),
+      { source: "/blog/:slug", destination: "/ru/blog/:slug", permanent: true },
+      { source: "/dostavka/:slug", destination: "/ru/dostavka/:slug", permanent: true },
     ];
   },
 

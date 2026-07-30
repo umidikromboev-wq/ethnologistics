@@ -1,37 +1,44 @@
-import LeadButton from "../../../components/LeadButton";
+import LeadButton from "../../../../components/LeadButton";
+import { LOCALES, normalizeLang, href, absHref, alternatesFor, tr } from "../../../../lib/locales";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Header from "../../../components/Header";
-import Footer from "../../../components/Footer";
-import PageHero from "../../../components/PageHero";
-import Reveal from "../../../components/Reveal";
-import { DIRECTIONS } from "../../../lib/content";
-import { CONTACT } from "../../../lib/data";
-import { IconCheck, IconArrow } from "../../../components/icons";
-import T from "../../../components/T";
+import Header from "../../../../components/Header";
+import Footer from "../../../../components/Footer";
+import PageHero from "../../../../components/PageHero";
+import Reveal from "../../../../components/Reveal";
+import { DIRECTIONS } from "../../../../lib/content";
+import { CONTACT } from "../../../../lib/data";
+import { IconCheck, IconArrow } from "../../../../components/icons";
+import T from "../../../../components/T";
 
 export function generateStaticParams() {
-  return DIRECTIONS.map((d) => ({ slug: d.slug }));
+  return LOCALES.flatMap((lang) => DIRECTIONS.map((d) => ({ lang, slug: d.slug })));
 }
 
-export function generateMetadata({ params }) {
-  const d = DIRECTIONS.find((x) => x.slug === params.slug);
+export async function generateMetadata({ params }) {
+  const { slug, lang: raw } = await params;
+  const lang = normalizeLang(raw);
+  const d = DIRECTIONS.find((x) => x.slug === slug);
   if (!d) return {};
   return {
-    title: `Доставка из ${d.countryGen} в Узбекистан`,
-    description: d.intro.slice(0, 160),
+    title: tr(`Доставка из ${d.countryGen} в Узбекистан`, lang),
+    description: tr(d.intro, lang).slice(0, 160),
+    alternates: alternatesFor(`/dostavka/${d.slug}`, lang),
   };
 }
 
-export default function DirectionPage({ params }) {
-  const d = DIRECTIONS.find((x) => x.slug === params.slug);
+export default async function DirectionPage({ params }) {
+  const { slug, lang: rawLang } = await params;
+  const lang = normalizeLang(rawLang);
+  const link = (p) => href(lang, p);
+  const d = DIRECTIONS.find((x) => x.slug === slug);
   if (!d) notFound();
 
   return (
     <>
       <Header />
       <main>
-        <PageHero
+        <PageHero lang={lang}
           crumb={`Доставка из ${d.countryGen}`}
           img={d.img}
           title={`Доставка из ${d.countryGen} в Узбекистан`}
@@ -77,12 +84,12 @@ export default function DirectionPage({ params }) {
             </div>
             <div style={{ display: "flex", justifyContent: "center", gap: ".8rem", marginTop: "2.4rem", flexWrap: "wrap" }}>
               <a className="btn btn--primary btn--lg" href="/#calc">{<T s={"Рассчитать доставку"} />} <IconArrow style={{ width: 18, height: 18 }} /></a>
-              <Link className="btn btn--ghost btn--lg" href="/stores">{<T s={"Смотреть магазины"} />}</Link>
+              <Link className="btn btn--ghost btn--lg" href={link("/stores")}>{<T s={"Смотреть магазины"} />}</Link>
             </div>
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </>
   );
 }
