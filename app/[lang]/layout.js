@@ -1,7 +1,14 @@
 import "../globals.css";
 import { Inter, Onest } from "next/font/google";
 import Script from "next/script";
-import { LOCALES, normalizeLang, alternatesFor, tr, SITE_ORIGIN, OG_LOCALE } from "../../lib/locales";
+import {
+  LOCALES,
+  normalizeLang,
+  alternatesFor,
+  tr,
+  SITE_ORIGIN,
+  OG_LOCALE,
+} from "../../lib/locales";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -79,8 +86,73 @@ export default async function RootLayout({ children, params }) {
   const GA_ID = "G-N6DTQPLZVJ";
   const lang = normalizeLang((await params).lang);
 
+  // Schema.org JSON-LD (GEO / AI Search Engine optimization)
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LogisticsService",
+        "@id": SITE_ORIGIN,
+        name: "Ethno Logistics",
+        url: SITE_ORIGIN,
+        logo: `${SITE_ORIGIN}/img/film.png`,
+        description:
+          "Международная доставка и выкуп товаров из России, Казахстана, Турции, ОАЭ, Китая и Европы в Узбекистан с 2015 года.",
+        areaServed: [
+          { "@type": "Country", name: "Uzbekistan" },
+          { "@type": "Country", name: "Russia" },
+          { "@type": "Country", name: "Kazakhstan" },
+          { "@type": "Country", name: "Turkey" },
+          { "@type": "Country", name: "UAE" },
+          { "@type": "Country", name: "China" },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_ORIGIN}/#faq`,
+        mainEntity: [
+          {
+            "@type": "Question",
+            name:
+              lang === "uz"
+                ? "O'zbekistonga xalqaro tezkor yuk yetkazib berish xizmati qanday ishlaydi?"
+                : "Как работает ультра-срочная международная доставка в Узбекистан?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                lang === "uz"
+                  ? "Ethno Logistics 2015-yildan beri Rossiya, Qozog'iston, Turkiya, BAA, Xitoy va Yevropadan O'zbekistonga 36 soatgacha bo'lgan muddatda ultrasrochniy yuk yetkazib beradi."
+                  : "Ethno Logistics с 2015 года осуществляет ультра-срочную доставку грузов и товаров из России, Казахстана, Турции, ОАЭ, Китая и Европы в Узбекистан за время от 36 часов.",
+            },
+          },
+          {
+            "@type": "Question",
+            name:
+              lang === "uz"
+                ? "ETHNO Buyer orqali xorijdan tovarlarni sotib olish (выкуп) imkoni bormi?"
+                : "Как выкупить товары из зарубежных магазинов через ETHNO Buyer?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                lang === "uz"
+                  ? "ETHNO Buyer xizmati orqali xorijiy internet-do'konlardan tovarlarni kalit topshirish sharti bilan sotib olish va O'zbekistonga yetkazib berishni rasmiylashtirishingiz mumkin."
+                  : "Сервис ETHNO Buyer позволяет выкупать товары под ключ из зарубежных интернет-магазинов и производить доставку прямо в Узбекистан.",
+            },
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <html lang={lang} className={`${inter.variable} ${display.variable}`}>
+      <head>
+        {/* Schema.org Structured Data AI uchun */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>
         <LangProvider lang={lang}>
           {children}
