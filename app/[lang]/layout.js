@@ -10,6 +10,9 @@ import {
   OG_LOCALE,
 } from "../../lib/locales";
 
+// Static media fayllar uchun til prefiksisiz domen manzili
+const DOMAIN_ROOT = "https://ethno-logistics.com";
+
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "600"],
@@ -72,8 +75,8 @@ export async function generateMetadata({ params }) {
       google: "1NaT936chCZ-Y6EjwjDP-ybhUYFWr6NELFzQJK_VlZ8",
     },
     icons: {
-      icon: [{ url: "/img/film.png" }],
-      apple: [{ url: "/img/film.png" }],
+      icon: [{ url: `${DOMAIN_ROOT}/img/film.png` }],
+      apple: [{ url: `${DOMAIN_ROOT}/img/film.png` }],
     },
   };
 }
@@ -95,7 +98,7 @@ export default async function RootLayout({ children, params }) {
         "@id": SITE_ORIGIN,
         name: "Ethno Logistics",
         url: SITE_ORIGIN,
-        logo: `${SITE_ORIGIN}/img/film.png`,
+        logo: `${DOMAIN_ROOT}/img/film.png`,
         description:
           "Международная доставка и выкуп товаров из России, Казахстана, Турции, ОАЭ, Китая и Европы в Узбекистан с 2015 года.",
         areaServed: [
@@ -160,7 +163,7 @@ export default async function RootLayout({ children, params }) {
           <LeadModal />
         </LangProvider>
 
-        {/* Google Analytics skriptlarini body oxiriga ko'chirdik */}
+        {/* Google Analytics skriptlari */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
@@ -173,7 +176,7 @@ export default async function RootLayout({ children, params }) {
             gtag('js', new Date());
             gtag('config', '${GA_ID}');
 
-            // Global telefon bosilishini kuzatish (xavfsizroq tekshiruv bilan)
+            // Global telefon bosilishini kuzatish
             document.addEventListener("click", function(e) {
               const link = e.target.closest('a[href^="tel:"]');
               if (link && typeof window.gtag === 'function') {
