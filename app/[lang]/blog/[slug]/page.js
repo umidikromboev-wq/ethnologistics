@@ -264,7 +264,7 @@ export default async function Article({ params }) {
                   overflow: "hidden",
                   boxShadow: "0 10px 30px -10px rgba(0,0,0,0.08)",
                   marginBottom: "3rem",
-                  aspectRatio: "16/8",
+                  aspectRatio: "4/3",
                   backgroundColor: "#f1f5f9",
                 }}
               >
@@ -273,7 +273,7 @@ export default async function Article({ params }) {
                   alt={a.title}
                   className="responsive-banner"
                   width="1300"
-                  height="500"
+                  height="800"
                   loading="lazy"
                   style={{
                     width: "100%",
