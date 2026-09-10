@@ -1,5 +1,12 @@
 import LeadButton from "../../../../components/LeadButton";
-import { LOCALES, normalizeLang, href, absHref, alternatesFor, tr } from "../../../../lib/locales";
+import {
+  LOCALES,
+  normalizeLang,
+  href,
+  absHref,
+  alternatesFor,
+  tr,
+} from "../../../../lib/locales";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "../../../../components/Header";
@@ -28,7 +35,16 @@ export async function generateMetadata({ params }) {
   };
 }
 
-function Block({ b }) {
+// Ichida <a href="...">...</a> kabi HTML teglari bo'lgan matnlarni
+// xavfsiz tarzda HTML sifatida render qilish uchun yordamchi komponent.
+// Oddiy T komponenti matnni string sifatida escape qilib chiqaradi,
+// shu sababli link matn ko'rinishida chiqib qolgan edi.
+function RichText({ text, lang, as: Tag = "span", style }) {
+  const translated = tr(text, lang);
+  return <Tag style={style} dangerouslySetInnerHTML={{ __html: translated }} />;
+}
+
+function Block({ b, lang }) {
   if (b.t === "h2")
     return (
       <h2
@@ -63,16 +79,17 @@ function Block({ b }) {
     );
   if (b.t === "p")
     return (
-      <p
+      <RichText
+        as="p"
+        text={b.v}
+        lang={lang}
         style={{
           fontSize: "1.0625rem",
           lineHeight: 1.7,
           color: "var(--text-muted, #475569)",
           marginBottom: "1.25rem",
         }}
-      >
-        <T s={b.v} />
-      </p>
+      />
     );
   if (b.t === "ul")
     return (
@@ -87,16 +104,17 @@ function Block({ b }) {
         }}
       >
         {b.v.map((x, i) => (
-          <li
+          <RichText
             key={i}
+            as="li"
+            text={x}
+            lang={lang}
             style={{
               fontSize: "1.0625rem",
               lineHeight: 1.6,
               color: "var(--text-muted, #334155)",
             }}
-          >
-            <T s={x} />
-          </li>
+          />
         ))}
       </ul>
     );
@@ -113,24 +131,27 @@ function Block({ b }) {
         }}
       >
         {b.v.map((x, i) => (
-          <li
+          <RichText
             key={i}
+            as="li"
+            text={x}
+            lang={lang}
             style={{
               fontSize: "1.0625rem",
               lineHeight: 1.6,
               color: "var(--text-muted, #334155)",
               paddingLeft: "0.25rem",
             }}
-          >
-            <T s={x} />
-          </li>
+          />
         ))}
       </ol>
     );
   if (b.t === "callout")
     return (
-      <div
-        className="callout callout--accent"
+      <RichText
+        as="div"
+        text={b.v}
+        lang={lang}
         style={{
           margin: "2rem 0",
           padding: "1.25rem 1.5rem",
@@ -141,9 +162,7 @@ function Block({ b }) {
           lineHeight: 1.6,
           color: "var(--text-main, #0f172a)",
         }}
-      >
-        <T s={b.v} />
-      </div>
+      />
     );
   return null;
 }
@@ -268,7 +287,7 @@ export default async function Article({ params }) {
 
             <div className="prose">
               {a.blocks.map((b, i) => (
-                <Block key={i} b={b} />
+                <Block key={i} b={b} lang={lang} />
               ))}
             </div>
 

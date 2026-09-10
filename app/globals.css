@@ -3277,6 +3277,22 @@ textarea.lead-field {
   width: 100%;
 }
 
+.prose a {
+  color: var(--accent, #2563eb);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(37, 99, 235, 0.35);
+  text-underline-offset: 2px;
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease;
+}
+
+.prose a:hover {
+  color: var(--accent-dark, #1d4ed8);
+  text-decoration-color: rgba(29, 78, 216, 0.7);
+}
+
 /* Katta ekranlarda (oddiy holda) balandlik 300px bo'ladi */
 .responsive-banner {
   width: 100%;
@@ -3328,8 +3344,13 @@ textarea.lead-field {
   cursor: pointer;
   transition: color 0.2s;
 }
-.lm__close:hover { color: var(--ink); }
-.lm__close svg { width: 1.1rem; height: 1.1rem; }
+.lm__close:hover {
+  color: var(--ink);
+}
+.lm__close svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
 .lm__title {
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.75rem);
@@ -3337,7 +3358,12 @@ textarea.lead-field {
   letter-spacing: -0.02em;
   margin: 0;
 }
-.lm__sub { color: var(--ink-2); margin: 0.6rem 0 0; font-size: 0.95rem; line-height: 1.5; }
+.lm__sub {
+  color: var(--ink-2);
+  margin: 0.6rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
 .lm__ctx {
   margin-top: 0.9rem;
   padding: 0.7rem 0.85rem;
@@ -3347,8 +3373,18 @@ textarea.lead-field {
   line-height: 1.5;
   font-weight: 600;
 }
-.lm__form { display: grid; gap: 0.7rem; margin-top: 1.25rem; }
-.lm__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.lm__form {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.25rem;
+}
+.lm__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
 .lm__field {
   width: 100%;
   padding: 0.85rem 1rem;
@@ -3357,14 +3393,19 @@ textarea.lead-field {
   color: var(--ink);
   font: inherit;
   font-size: 1rem;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
 }
 .lm__field:focus {
   outline: none;
   border-color: var(--accent);
   background: #fff;
 }
-textarea.lm__field { resize: vertical; min-height: 4.5rem; }
+textarea.lm__field {
+  resize: vertical;
+  min-height: 4.5rem;
+}
 .lm__consent {
   display: flex;
   align-items: flex-start;
@@ -3374,16 +3415,55 @@ textarea.lm__field { resize: vertical; min-height: 4.5rem; }
   line-height: 1.45;
   cursor: pointer;
 }
-.lm__consent input { margin-top: 0.15rem; accent-color: var(--accent); }
-.lm__submit { width: 100%; justify-content: center; margin-top: 0.2rem; }
-.lm__submit:disabled { opacity: 0.65; cursor: default; }
-.lm__status { font-size: 0.9rem; line-height: 1.45; padding: 0.7rem 0.85rem; }
-.lm__status.is-ok { background: #e7f4ec; color: #1c6b3d; }
-.lm__status.is-err { background: #fdecec; color: #a32222; }
+.lm__consent input {
+  margin-top: 0.15rem;
+  accent-color: var(--accent);
+}
+.lm__submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.2rem;
+}
+.lm__submit:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+.lm__status {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  padding: 0.7rem 0.85rem;
+}
+.lm__status.is-ok {
+  background: #e7f4ec;
+  color: #1c6b3d;
+}
+.lm__status.is-err {
+  background: #fdecec;
+  color: #a32222;
+}
 
-@keyframes lmFade { from { opacity: 0 } to { opacity: 1 } }
-@keyframes lmRise { from { opacity: 0; transform: translateY(14px) scale(0.985) } to { opacity: 1; transform: none } }
+@keyframes lmFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes lmRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .lm, .lm__box { animation: none; }
+  .lm,
+  .lm__box {
+    animation: none;
+  }
 }
