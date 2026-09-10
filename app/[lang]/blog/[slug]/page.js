@@ -273,7 +273,7 @@ export default async function Article({ params }) {
                   alt={a.title}
                   className="responsive-banner"
                   width="1300"
-                  height="300"
+                  height="500"
                   loading="lazy"
                   style={{
                     width: "100%",
