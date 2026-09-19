@@ -2,15 +2,23 @@ import { allSlugs } from "../lib/articles";
 import { DIRECTIONS } from "../lib/content";
 import { LOCALES, LANG_DEFAULT, absHref } from "../lib/locales";
 
-// Каждая страница существует на шести языках. Запись несёт полный взаимный
-// набор hreflang, чтобы поисковик связал версии между собой, а не счёл дублями.
-// Домен здесь раньше был указан чужой — ethnologistics.com без дефиса (старый
-// сайт клиента), из-за чего карта сайта уводила робота не туда.
 function entry(path, changeFrequency, priority) {
-  const languages = Object.fromEntries(LOCALES.map((l) => [l, absHref(l, path)]));
-  const alternates = { languages: { ...languages, "x-default": absHref(LANG_DEFAULT, path) } };
+  const languages = Object.fromEntries(
+    LOCALES.map((l) => [l, absHref(l, path)]),
+  );
+
+  const alternates = {
+    languages: {
+      ...languages,
+      "x-default": absHref(LANG_DEFAULT, path),
+    },
+  };
+
+  const currentDate = new Date().toISOString();
+
   return LOCALES.map((lang) => ({
     url: absHref(lang, path),
+    lastModified: currentDate,
     changeFrequency,
     priority,
     alternates,
@@ -18,7 +26,7 @@ function entry(path, changeFrequency, priority) {
 }
 
 const PAGES = [
-  ["/", "weekly", 1],
+  ["/", "weekly", 1.0],
   ["/how-it-works", "monthly", 0.8],
   ["/stores", "monthly", 0.7],
   ["/business", "monthly", 0.7],
