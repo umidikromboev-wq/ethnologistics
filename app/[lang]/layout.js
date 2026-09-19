@@ -10,7 +10,6 @@ import {
   OG_LOCALE,
 } from "../../lib/locales";
 
-// Static media fayllar uchun til prefiksisiz domen manzili
 const DOMAIN_ROOT = "https://ethno-logistics.com";
 
 const inter = Inter({
@@ -39,11 +38,12 @@ export function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
 }
 
-// Неизвестный языковой префикс — 404, а не русская страница по чужому адресу.
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }) {
-  const lang = normalizeLang((await params).lang);
+  const resolvedParams = await params;
+  const lang = normalizeLang(resolvedParams.lang);
+
   return {
     metadataBase: new URL(SITE_ORIGIN),
     title: {
@@ -63,6 +63,7 @@ export async function generateMetadata({ params }) {
       "ETHNO Buyer",
       "международная логистика Ташкент",
     ],
+    // Alternates va Canonical to'g'ri shakllanganini tekshirish lozim
     alternates: alternatesFor("/", lang),
     openGraph: {
       type: "website",
@@ -70,12 +71,16 @@ export async function generateMetadata({ params }) {
       siteName: "Ethno Logistics",
       title: tr(META.title, lang),
       description: tr(META.ogDescription, lang),
+      url: `${SITE_ORIGIN}/${lang}`,
     },
     verification: {
       google: "1NaT936chCZ-Y6EjwjDP-ybhUYFWr6NELFzQJK_VlZ8",
     },
     icons: {
-      icon: [{ url: `${DOMAIN_ROOT}/img/film.png` }],
+      icon: [
+        { url: `${DOMAIN_ROOT}/favicon.ico`, sizes: "any" },
+        { url: `${DOMAIN_ROOT}/img/film.png`, type: "image/png" },
+      ],
       apple: [{ url: `${DOMAIN_ROOT}/img/film.png` }],
     },
   };
@@ -87,17 +92,19 @@ import { LangProvider } from "../../components/LangProvider";
 
 export default async function RootLayout({ children, params }) {
   const GA_ID = "G-N6DTQPLZVJ";
-  const lang = normalizeLang((await params).lang);
+  const resolvedParams = await params;
+  const lang = normalizeLang(resolvedParams.lang);
 
-  // Schema.org JSON-LD (GEO / AI Search Engine optimization)
+  const currentUrl = `${SITE_ORIGIN}/${lang}`;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "LogisticsService",
-        "@id": SITE_ORIGIN,
+        "@id": currentUrl,
         name: "Ethno Logistics",
-        url: SITE_ORIGIN,
+        url: currentUrl,
         logo: `${DOMAIN_ROOT}/img/film.png`,
         description:
           "Международная доставка и выкуп товаров из России, Казахстана, Турции, ОАЭ, Китая и Европы в Узбекистан с 2015 года.",
@@ -112,7 +119,7 @@ export default async function RootLayout({ children, params }) {
       },
       {
         "@type": "FAQPage",
-        "@id": `${SITE_ORIGIN}/#faq`,
+        "@id": `${currentUrl}/#faq`,
         mainEntity: [
           {
             "@type": "Question",
@@ -150,7 +157,6 @@ export default async function RootLayout({ children, params }) {
   return (
     <html lang={lang} className={`${inter.variable} ${display.variable}`}>
       <head>
-        {/* Schema.org Structured Data AI uchun */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -163,7 +169,6 @@ export default async function RootLayout({ children, params }) {
           <LeadModal />
         </LangProvider>
 
-        {/* Google Analytics skriptlari */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
@@ -176,7 +181,6 @@ export default async function RootLayout({ children, params }) {
             gtag('js', new Date());
             gtag('config', '${GA_ID}');
 
-            // Global telefon bosilishini kuzatish
             document.addEventListener("click", function(e) {
               const link = e.target.closest('a[href^="tel:"]');
               if (link && typeof window.gtag === 'function') {
