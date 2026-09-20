@@ -35,10 +35,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// Ichida <a href="...">...</a> kabi HTML teglari bo'lgan matnlarni
-// xavfsiz tarzda HTML sifatida render qilish uchun yordamchi komponent.
-// Oddiy T komponenti matnni string sifatida escape qilib chiqaradi,
-// shu sababli link matn ko'rinishida chiqib qolgan edi.
+// HTML teglari bo'lgan matnlarni xavfsiz render qilish uchun yordamchi komponent
 function RichText({ text, lang, as: Tag = "span", style }) {
   const translated = tr(text, lang);
   return <Tag style={style} dangerouslySetInnerHTML={{ __html: translated }} />;
@@ -47,7 +44,10 @@ function RichText({ text, lang, as: Tag = "span", style }) {
 function Block({ b, lang }) {
   if (b.t === "h2")
     return (
-      <h2
+      <RichText
+        as="h2"
+        text={b.v}
+        lang={lang}
         style={{
           fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
           fontWeight: 700,
@@ -57,13 +57,14 @@ function Block({ b, lang }) {
           marginBottom: "1rem",
           letterSpacing: "-0.02em",
         }}
-      >
-        <T s={b.v} />
-      </h2>
+      />
     );
   if (b.t === "h3")
     return (
-      <h3
+      <RichText
+        as="h3"
+        text={b.v}
+        lang={lang}
         style={{
           fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
           fontWeight: 600,
@@ -73,9 +74,7 @@ function Block({ b, lang }) {
           marginBottom: "0.75rem",
           letterSpacing: "-0.01em",
         }}
-      >
-        <T s={b.v} />
-      </h3>
+      />
     );
   if (b.t === "p")
     return (
